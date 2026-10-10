@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101426"><title>دردشـة | غرفة خاصة</title>
+<style>
+:root{--bg:#0a0e1b;--panel:#131a2d;--line:#2b3651;--text:#f7f8ff;--muted:#a6b0c8;--accent:#9b83ff;--mine:#7359d8;--other:#222d45}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;min-height:100dvh;padding:14px;background:radial-gradient(ellipse at top,#202650 0,#0a0e1b 62%);color:var(--text);font-family:Tahoma,Arial,sans-serif;display:grid;place-items:center}
+.card{width:100%;max-width:540px;background:var(--panel);border:1px solid var(--line);border-radius:23px;overflow:hidden;box-shadow:0 25px 75px #0007}.login{padding:26px}.hero{text-align:center;padding:8px 0 22px}.logo{width:64px;height:64px;margin:0 auto 13px;display:grid;place-items:center;border-radius:21px;background:linear-gradient(135deg,#c1b2ff,#7253d6);font-size:29px}.hero h1{margin:0 0 8px;font-size:25px}.sub{color:var(--muted);font-size:13px;line-height:1.9}
+.tabs{display:flex;gap:8px;background:#0d1324;padding:5px;border-radius:13px;margin:10px 0 17px}.tab{flex:1;background:transparent;color:var(--muted);padding:11px}.tab.active{background:#2a2548;color:white}
+label{display:block;font-size:13px;margin:13px 0 7px;color:#dce1f2}input{width:100%;min-width:0;background:#0b1120;color:white;border:1px solid #35415e;border-radius:12px;padding:14px;font:inherit;font-size:15px;outline:none}input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #9b83ff20}button{font:inherit;border:0;border-radius:12px;font-size:14px;font-weight:bold;cursor:pointer}.primary{width:100%;padding:14px;margin-top:18px;background:linear-gradient(135deg,#a18aff,#7053d4);color:white}.secondary{padding:12px;background:#242e47;color:#e8e9ff}.note{font-size:11px;line-height:1.9;color:#9aa6c2;margin:17px 0 0}.hidden{display:none!important}.error{font-size:12px;color:#ffb6b6;min-height:18px;margin-top:8px}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px 18px;border-bottom:1px solid var(--line)}.chat-head h2{font-size:18px;margin:0 0 5px}.status{font-size:11px;color:#7fe0b2}.status.offline{color:#ffb2b2}.leave{background:#3a2235;color:#ffbdcc;padding:10px 12px}
+.roombar{padding:10px 14px;display:flex;align-items:center;gap:8px;background:#10172a;border-bottom:1px solid var(--line)}.roombar input{font-size:12px;padding:10px}.roombar button{white-space:nowrap}.room-hint{font-size:10px;color:var(--muted);padding:7px 14px 0;background:#0e1527}
+#messages{height:min(51vh,470px);min-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:15px;background:#0e1527}.msg{max-width:88%;padding:10px 12px;border-radius:15px;overflow-wrap:anywhere;white-space:pre-wrap;line-height:1.65;font-size:14px}.mine{align-self:flex-start;background:var(--mine);border-bottom-left-radius:5px}.theirs{align-self:flex-end;background:var(--other);border-bottom-right-radius:5px}.name{font-size:11px;opacity:.72;margin-bottom:3px}.time{font-size:10px;opacity:.6;margin-top:4px}.system{align-self:center;font-size:11px;color:#bac3da;background:#1c263b;padding:6px 11px;border-radius:20px;text-align:center}.typing{height:23px;padding:3px 16px;font-size:11px;color:var(--muted);background:#0e1527}.composer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}.composer input{flex:1}.send{padding:0 18px;background:var(--accent);color:#18122e}.send:disabled{opacity:.5}.foot{text-align:center;font-size:10px;color:#7785a4;padding:0 12px 14px}
+@media(max-width:420px){body{padding:7px}.login{padding:20px}.chat-head{padding:14px}.roombar{padding:9px}.send{padding:0 12px}}
+</style></head>
+<body>
+<section class="card login" id="loginScreen">
+  <div class="hero"><div class="logo">🔐</div><h1>دردشـة خاصة</h1><p class="sub">غرفة خاصة برمز دعوة عشوائي قوي.<br>أنشئ غرفة وشارك رمزها مع الشخص الذي تريد التواصل معه.</p></div>
+  <label for="nameInput">اسم العرض</label><input id="nameInput" maxlength="30" autocomplete="nickname" placeholder="اكتب اسمك">
+  <div class="tabs"><button class="tab active" id="createTab" type="button">إنشاء غرفة</button><button class="tab" id="joinTab" type="button">لديّ رمز دعوة</button></div>
+  <div id="createPanel"><p class="sub">سننشئ رمز دعوة عشوائياً بطول قوي. احتفظ به وشاركه عبر قناة آمنة.</p><button class="primary" id="createButton" type="button">إنشاء غرفة جديدة</button></div>
+  <div id="joinPanel" class="hidden"><label for="codeInput">رمز الدعوة</label><input id="codeInput" maxlength="40" autocomplete="off" placeholder="الصق رمز الدعوة الكامل"><button class="primary" id="joinButton" type="button">الانضمام إلى الغرفة</button></div>
+  <div class="error" id="error"></div>
+  <p class="note">الخصوصية تعتمد على حماية رمز الدعوة وتأمين الاستضافة. لا ترسل الرمز علناً. استخدم الموقع عبر HTTPS عند نشره على الإنترنت. هذه النسخة لا تقدم تشفيراً طرفياً، ولا تحفظ سجل الرسائل بشكل دائم.</p>
+</section>
+<section class="card hidden" id="chatScreen">
+  <header class="chat-head"><div><h2>💬 الغرفة الخاصة</h2><div class="status" id="connectionStatus">● متصل</div></div><button class="leave" id="leaveButton" type="button">مغادرة</button></header>
+  <div class="roombar"><input id="shareCode" readonly aria-label="رمز الدعوة"><button class="secondary" id="copyButton" type="button">نسخ الرمز</button></div>
+  <div class="room-hint">شارك الرمز مع الشخص المقصود فقط.</div>
+  <div id="messages" aria-live="polite"></div><div class="typing" id="typingStatus"></div>
+  <form class="composer" id="messageForm"><input id="msgInput" maxlength="1000" autocomplete="off" placeholder="اكتب رسالتك..." required><button class="send" id="sendButton" type="submit">إرسال</button></form>
+  <div class="foot">لا تشارك كلمات المرور أو البيانات الحساسة.</div>
+</section>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/app.js"></script></body></html>
